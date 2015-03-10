@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<widgets>
+    <productlist_list type="productlist/list" translate="name description" module="productlist">
+        <name>Ceicom Product List</name>
+        <description>Exibe uma lista de produtos</description>
+        <parameters>
+            <title>
+                <required>1</required>
+                <visible>1</visible>
+                <label>Título (front-end)</label>
+                <type>text</type>
+                <value></value>
+            </title>
+            <category translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Categoria(s)</label>
+                <type>label</type>
+                <helper_block>
+                    <type>adminhtml/catalog_category_widget_chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Selecionar...</open>
+                        </button>
+                    </data>
+                </helper_block>
+            </category>
+            <attribute_set>
+                <label>Atributo</label>
+                <description>Atributo de produto para filtragem</description>
+                <required>0</required>
+                <visible>1</visible>                
+                <type>select</type>
+                <source_model>productlist/Attributeset</source_model>
+            </attribute_set>
+            <attribute_value translate="label">
+                <label>Valor do atributo</label>
+                 <description>Especifica um valor para comparação</description>
+                <required>0</required>
+                <visible>1</visible>
+                <type>text</type>
+                <value></value>
+            </attribute_value>
+            <max_product_list translate="label">
+                <label>Número máximo de produtos</label>
+                <required>0</required>
+                <visible>1</visible>
+                <type>text</type>
+                <value></value>
+            </max_product_list>
+            <show_in_stock translate="label">
+                <label>Exibir produtos fora de estoque</label>
+                <required>0</required>
+                <visible>1</visible>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <value></value>
+            </show_in_stock>
+            <custom_template translate="label">
+                <label>Template customizado</label>
+                <description>Ex.: custom/theme.phtml</description>
+                <required>0</required>
+                <visible>1</visible>
+                <type>text</type>
+                <value></value>
+            </custom_template>
+        </parameters>
+    </productlist_list>
+</widgets>
