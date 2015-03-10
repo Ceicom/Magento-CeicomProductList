@@ -1,18 +1,7 @@
 <?php
-/* 
-* @Author: Jonatan
-* @Date:   2014-01-15 10:48:51
-* @Last Modified by:   Jonatan
-* @Last Modified time: 2015-03-10 10:32:22
-*/
 class Ceicom_ProductList_Model_Attributeset extends Mage_Core_Model_Abstract
 {
 
-    /**
-     * Provides a value-label array of available options
-     *
-     * @return array
-     */
     public function toOptionArray()
     {
         return $this->getAttributeSetList();
@@ -36,7 +25,6 @@ class Ceicom_ProductList_Model_Attributeset extends Mage_Core_Model_Abstract
 	        break;
 	    }
 
-	    return $attributeArray; 
-	        
+	    return $attributeArray;  
 	}
 }
