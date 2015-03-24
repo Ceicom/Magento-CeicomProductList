@@ -37,6 +37,8 @@ class Ceicom_ProductList_Block_List extends Mage_Catalog_Block_Product_Abstract 
         $category = Mage::getModel('catalog/category')->load($arguments['categoryId']);
         $products = Mage::getResourceModel('catalog/product_collection')
             ->addAttributeToSelect(array('name', 'price', 'small_image', 'short_description', 'special_price'))
+			->addMinimalPrice()
+			->addFinalPrice()
             ->addCategoryFilter($category)
             ->addAttributeToSort('created_at', 'desc')
             ->setPageSize($arguments['maxProductList'])
