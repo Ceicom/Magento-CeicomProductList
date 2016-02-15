@@ -44,7 +44,7 @@ class Ceicom_ProductList_Block_List extends Mage_Catalog_Block_Product_Abstract 
             ->setPageSize($arguments['maxProductList'])
             ->setCurPage(1);
 
-        if (!$arguments['stock']) {
+        if (!$arguments['showInStock']) {
             Mage::getSingleton('cataloginventory/stock')->addInStockFilterToCollection($products);
         }
         
