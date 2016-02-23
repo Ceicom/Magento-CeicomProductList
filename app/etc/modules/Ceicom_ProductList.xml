@@ -3,9 +3,9 @@
     <modules>
         <Ceicom_ProductList>
             <active>true</active>
-            <codePool>local</codePool>
+            <codePool>community</codePool>
             <depends>
-                <Mage_Cms />
+                <Mage_Cms/>
             </depends>
         </Ceicom_ProductList>
     </modules>
