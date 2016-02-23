@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ceicom_ProductList>
+            <version>0.2.0</version>
+        </Ceicom_ProductList>
+    </modules>
+    <global>
+        <blocks>
+            <ceicom_productlist>
+                <class>Ceicom_ProductList_Block</class>
+            </ceicom_productlist>
+        </blocks>
+        <models>
+            <ceicom_productlist>
+                <class>Ceicom_ProductList_Model</class>
+            </ceicom_productlist>
+        </models>
+        <helpers>
+            <ceicom_productlist>
+                <class>Ceicom_ProductList_Helper</class>
+            </ceicom_productlist>
+        </helpers>
+    </global>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Ceicom_ProductList>
+                    <files>
+                        <default>Ceicom_ProductList.csv</default>
+                    </files>
+                </Ceicom_ProductList>
+            </modules>
+        </translate>
+    </adminhtml>
+</config>

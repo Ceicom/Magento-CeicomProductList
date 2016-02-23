@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<widgets>
+    <ceicom_productlist type="ceicom_productlist/widget_list" translate="name description" module="ceicom_productlist">
+        <name>Product List - Ceicom</name>
+        <description>Show products wherever you want</description>
+        <parameters>
+            <category_ids translate="label">
+                <required>0</required>
+                <visible>1</visible>
+                <label>Filter by Category(ies)</label>
+                <type>multiselect</type>
+                <source_model>ceicom_productlist/system_config_source_category</source_model>
+            </category_ids>
+            <filter_attribute_code translate="label description">
+                <required>0</required>
+                <visible>1</visible>
+                <label>Filter by Attribute</label>
+                <description>Select an attribute to filter the product list.</description>
+                <type>select</type>
+                <source_model>ceicom_productlist/system_config_source_attribute</source_model>
+            </filter_attribute_code>
+            <filter_attribute_value translate="label description">
+                <required>0</required>
+                <visible>1</visible>
+                <label>Attribute Value</label>
+                <description>Set the value that the attribute above must have.</description>
+                <type>text</type>
+            </filter_attribute_value>
+            <products_count_limit translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value>8</value>
+                <label>Number of Products to Display</label>
+                <type>text</type>
+            </products_count_limit>
+            <random_products translate="label description">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Random Products</label>
+                <description>Works when the cache is refreshed. See the option "Cache Lifetime (seconds)".</description>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+            </random_products>
+            <show_out_of_stock translate="label description">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Show Out of Stock Products</label>
+                <description>This option only affects when the inventory is configured to display out of stock products (see "System/Configuration/Catalog/Inventory/Stock Options").</description>
+                <type>select</type>
+                <value>1</value>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+            </show_out_of_stock>
+            <template>
+                <visible>0</visible>
+                <type>select</type>
+                <value>catalog/product/list.phtml</value>
+                <values>
+                    <default translate="label">
+                        <value>catalog/product/list.phtml</value>
+                        <label>Configure it in "Widget Options"</label>
+                    </default>
+                </values>
+            </template>
+            <template_type translate="label description">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Template</label>
+                <description>This widget can use the catalog/product/list.phtml or your own template file to show the products.</description>
+                <type>select</type>
+                <value>grid</value>
+                <values>
+                    <default translate="label">
+                        <value>grid</value>
+                        <label>Default Product List (grid mode)</label>
+                    </default>
+                    <list translate="label">
+                        <value>list</value>
+                        <label>Default Product List (list mode)</label>
+                    </list>
+                    <custom translate="label">
+                        <value>custom</value>
+                        <label>Custom Template</label>
+                    </custom>
+                </values>
+            </template_type>
+            <grid_column_count translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Number of Columns in the Grid</label>
+                <type>text</type>
+                <value>4</value>
+                <depends>
+                    <template_type>
+                        <value>grid</value>
+                    </template_type>
+                </depends>
+            </grid_column_count>
+            <custom_template translate="label description">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Custom Template</label>
+                <description>Eg. my/template/file.phtml. You can copy the catalog/product/list.phtml and customize it.</description>
+                <type>text</type>
+                <depends>
+                    <template_type>
+                        <value>custom</value>
+                    </template_type>
+                </depends>
+            </custom_template>
+            <frontend_title translate="label description">
+                <required>0</required>
+                <visible>1</visible>
+                <label>Frontend Title</label>
+                <description>Set a title for the product list on frontend (call $this->getFrontendTitle in your template file).</description>
+                <type>text</type>
+                <depends>
+                    <template_type>
+                        <value>custom</value>
+                    </template_type>
+                </depends>
+            </frontend_title>
+            <cache_lifetime translate="label description">
+                <required>0</required>
+                <visible>1</visible>
+                <label>Cache Lifetime (seconds)</label>
+                <description>The default value is 86400. To refresh instantly, clear the "Blocks HTML output" cache.</description>
+                <type>text</type>
+            </cache_lifetime>
+        </parameters>
+    </ceicom_productlist>
+</widgets>

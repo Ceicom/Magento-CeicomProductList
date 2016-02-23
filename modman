@@ -1,0 +1,4 @@
+app/code/community/Ceicom/ProductList app/code/community/Ceicom/ProductList
+app/etc/modules/* app/etc/modules/
+app/design/frontend/rwd/default/template/ceicom/* app/design/frontend/rwd/default/template/ceicom/
+app/locale/en_US/* app/locale/en_US/
