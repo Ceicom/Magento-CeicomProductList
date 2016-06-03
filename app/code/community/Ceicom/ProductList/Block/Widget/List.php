@@ -61,6 +61,8 @@ class Ceicom_ProductList_Block_Widget_List extends Mage_Catalog_Block_Product_Ab
                 ->addAttributeToSort('created_at', 'desc')
                 ->setPageSize($this->getProductsCountLimit())
                 ->setCurPage(1);
+                
+            $this->_productCollection->getSelect()->group('e.entity_id');
         }
 
         return $this->_productCollection;
