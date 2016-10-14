@@ -50,7 +50,8 @@ class Ceicom_ProductList_Block_Widget_List extends Mage_Catalog_Block_Product_Ab
     {
         if (is_null($this->_productCollection)) {
             $this->_productCollection = Mage::getResourceModel('catalog/product_collection');
-            $this->_productCollection->setVisibility(Mage::getSingleton('catalog/product_visibility')->getVisibleInCatalogIds());
+            $this->_productCollection->setVisibility(Mage::getSingleton('catalog/product_visibility')
+                ->getVisibleInCatalogIds());
             $this->_productCollection = $this->_addProductAttributesAndPrices($this->_productCollection);
             $this->_addCategoryFilterToCollection();
             $this->_addAttributeFilterToCollection();
@@ -85,15 +86,17 @@ class Ceicom_ProductList_Block_Widget_List extends Mage_Catalog_Block_Product_Ab
                 'product_id = entity_id',
                 null,
                 'left'
-            )
-                ->addAttributeToFilter('category_id', array('in' => $categoryIds));
+            )->addAttributeToFilter('category_id', array('in' => $categoryIds));
         }
     }
 
     protected function _addAttributeFilterToCollection()
     {
         if ($this->hasData('filter_attribute_code') && $this->hasData('filter_attribute_value')) {
-            $this->_productCollection->addAttributeToFilter($this->getData('filter_attribute_code'), $this->getData('filter_attribute_value'));
+            $this->_productCollection->addAttributeToFilter(
+                $this->getData('filter_attribute_code'),
+                $this->getData('filter_attribute_value')
+            );
         }
     }
 
