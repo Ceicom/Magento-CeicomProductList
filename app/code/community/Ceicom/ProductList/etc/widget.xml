@@ -26,6 +26,31 @@
                 <description>Set the value that the attribute above must have.</description>
                 <type>text</type>
             </filter_attribute_value>
+            <sort_attribute_code translate="label description">
+                <required>0</required>
+                <visible>1</visible>
+                <label>Sort by Attribute</label>
+                <description>Select an attribute to sort the product list.</description>
+                <type>select</type>
+                <source_model>ceicom_productlist/system_config_source_attribute</source_model>
+            </sort_attribute_code>
+            <sort_attribute_order translate="label">
+                <required>0</required>
+                <visible>1</visible>
+                <label>Sort Order</label>
+                <type>select</type>
+                <value>asc</value>
+                <values>
+                    <default translate="label">
+                        <value>asc</value>
+                        <label>Ascending</label>
+                    </default>
+                    <desc translate="label">
+                        <value>desc</value>
+                        <label>Descending</label>
+                    </desc>
+                </values>
+            </sort_attribute_order>
             <products_count_limit translate="label">
                 <required>1</required>
                 <visible>1</visible>
@@ -99,7 +124,7 @@
                 <required>1</required>
                 <visible>1</visible>
                 <label>Custom Template</label>
-                <description>Eg. my/template/file.phtml. You can copy the catalog/product/list.phtml and customize it.</description>
+                <description>E.g. my/template/file.phtml. You can copy the catalog/product/list.phtml and customize it.</description>
                 <type>text</type>
                 <depends>
                     <template_type>
@@ -119,6 +144,15 @@
                     </template_type>
                 </depends>
             </frontend_title>
+            <cache_formkey translate="label description">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Cache "Form Key"</label>
+                <description>If your template file has some functionality that needs Magento form key validation (e.g. Add to cart button) keep it enabled. Disable to use the same cache for each user and improve performance.</description>
+                <type>select</type>
+                <value>1</value>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+            </cache_formkey>
             <cache_lifetime translate="label description">
                 <required>0</required>
                 <visible>1</visible>

@@ -2,11 +2,11 @@
 class Ceicom_ProductList_Block_Widget_List extends Mage_Catalog_Block_Product_Abstract
     implements Mage_Widget_Block_Interface
 {
-    const TEMPLATE_TYPE_GRID           = 'grid';
-    const TEMPLATE_TYPE_LIST           = 'list';
-    const TEMPLATE_TYPE_CUSTOM         = 'custom';
+    const TEMPLATE_TYPE_GRID = 'grid';
+    const TEMPLATE_TYPE_LIST = 'list';
+    const TEMPLATE_TYPE_CUSTOM = 'custom';
     const DEFAULT_PRODUCTS_COUNT_LIMIT = 8;
-    const DEFAULT_GRID_COLUMN_COUNT    = 4;
+    const DEFAULT_GRID_COLUMN_COUNT = 4;
 
     protected $_cacheKeyInfo;
     protected $_productCollection;
@@ -28,13 +28,20 @@ class Ceicom_ProductList_Block_Widget_List extends Mage_Catalog_Block_Product_Ab
                 Mage::getDesign()->getPackageName(),
                 Mage::getDesign()->getTheme('template'),
                 Mage::getSingleton('customer/session')->getCustomerGroupId(),
+                Mage::app()->getStore()->isCurrentlySecure(),
                 $this->getProductsCountLimit(),
                 'template'               => $this->_getTemplate(),
                 'category_ids'           => $this->getData('category_ids'),
                 'filter_attribute_code'  => $this->getData('filter_attribute_code'),
                 'filter_attribute_value' => $this->getData('filter_attribute_value'),
+                'sort_attribute_code'    => $this->getData('sort_attribute_code'),
+                'sort_attribute_order'   => $this->getData('sort_attribute_order'),
                 'random_products'        => $this->getData('random_products')
             );
+
+            if ((bool) $this->getData('cache_formkey')) {
+                $this->_cacheKeyInfo[] = Mage::getSingleton('core/session')->getFormKey();
+            }
         }
 
         return $this->_cacheKeyInfo;
@@ -44,10 +51,12 @@ class Ceicom_ProductList_Block_Widget_List extends Mage_Catalog_Block_Product_Ab
     {
         if (is_null($this->_productCollection)) {
             $this->_productCollection = Mage::getResourceModel('catalog/product_collection');
-            $this->_productCollection->setVisibility(Mage::getSingleton('catalog/product_visibility')->getVisibleInCatalogIds());
+            $this->_productCollection->setVisibility(Mage::getSingleton('catalog/product_visibility')
+                ->getVisibleInCatalogIds());
             $this->_productCollection = $this->_addProductAttributesAndPrices($this->_productCollection);
             $this->_addCategoryFilterToCollection();
             $this->_addAttributeFilterToCollection();
+            $this->_sortCollection();
 
             if (!(bool) $this->getData('show_out_of_stock')) {
                 Mage::getSingleton('cataloginventory/stock')->addInStockFilterToCollection($this->_productCollection);
@@ -58,10 +67,9 @@ class Ceicom_ProductList_Block_Widget_List extends Mage_Catalog_Block_Product_Ab
             }
 
             $this->_productCollection->addStoreFilter()
-                ->addAttributeToSort('created_at', 'desc')
                 ->setPageSize($this->getProductsCountLimit())
                 ->setCurPage(1);
-                
+
             $this->_productCollection->getSelect()->group('e.entity_id');
         }
 
@@ -73,22 +81,32 @@ class Ceicom_ProductList_Block_Widget_List extends Mage_Catalog_Block_Product_Ab
         if ($this->hasData('category_ids')) {
             $categoryIds = explode(',', $this->getData('category_ids'));
             $this->_productCollection->joinField(
-                    'category_id',
-                    'catalog/category_product',
-                    'category_id',
-                    'product_id = entity_id',
-                    null,
-                    'left'
-                )
-                ->addAttributeToFilter('category_id', array('in' => $categoryIds));
+                'category_id',
+                'catalog/category_product',
+                'category_id',
+                'product_id = entity_id',
+                null,
+                'left'
+            )->addAttributeToFilter('category_id', array('in' => $categoryIds));
         }
     }
 
     protected function _addAttributeFilterToCollection()
     {
         if ($this->hasData('filter_attribute_code') && $this->hasData('filter_attribute_value')) {
-            $this->_productCollection->addAttributeToFilter($this->getData('filter_attribute_code'), $this->getData('filter_attribute_value'));
+            $this->_productCollection->addAttributeToFilter(
+                $this->getData('filter_attribute_code'),
+                $this->getData('filter_attribute_value')
+            );
         }
+    }
+
+    protected function _sortCollection()
+    {
+        $attributeToSort = $this->hasData('sort_attribute_code') ? $this->getData('sort_attribute_code') : 'created_at';
+        $sortOrder = $this->hasData('sort_attribute_order') ? $this->getData('sort_attribute_order') : 'desc';
+
+        $this->_productCollection->addAttributeToSort($attributeToSort, $sortOrder);
     }
 
     public function getLoadedProductCollection()
@@ -141,7 +159,7 @@ class Ceicom_ProductList_Block_Widget_List extends Mage_Catalog_Block_Product_Ab
         }
     }
 
-    protected  function _beforeToHtml()
+    protected function _beforeToHtml()
     {
         $this->setTemplate($this->_getTemplate());
         $this->setProductCollection($this->_getProductCollection());
