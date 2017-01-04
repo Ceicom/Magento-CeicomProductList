@@ -28,6 +28,7 @@ class Ceicom_ProductList_Block_Widget_List extends Mage_Catalog_Block_Product_Ab
                 Mage::getDesign()->getPackageName(),
                 Mage::getDesign()->getTheme('template'),
                 Mage::getSingleton('customer/session')->getCustomerGroupId(),
+                Mage::app()->getStore()->isCurrentlySecure(),
                 $this->getProductsCountLimit(),
                 'template'               => $this->_getTemplate(),
                 'category_ids'           => $this->getData('category_ids'),
