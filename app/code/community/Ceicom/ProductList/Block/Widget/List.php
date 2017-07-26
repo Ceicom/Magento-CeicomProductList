@@ -87,7 +87,11 @@ class Ceicom_ProductList_Block_Widget_List extends Mage_Catalog_Block_Product_Ab
     protected function _addAttributeFilterToCollection()
     {
         if ($this->hasData('filter_attribute_code') && $this->hasData('filter_attribute_value')) {
-            $this->_productCollection->addAttributeToFilter($this->getData('filter_attribute_code'), $this->getData('filter_attribute_value'));
+            if($this->getData('filter_attribute_code') == 'sku'){
+                $this->_productCollection->addAttributeToFilter('sku', array('in' => explode(",",$this->getData('filter_attribute_value'))));
+            } else {
+                $this->_productCollection->addAttributeToFilter($this->getData('filter_attribute_code'), $this->getData('filter_attribute_value'));
+            }
         }
     }
 
